@@ -3,10 +3,11 @@ const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const express = require('express');
 const path = require('path');
-const domain = '.sdk-nodejs-sandbox.herokuapp.com';
 
+const domain = 'yourdomain.com'; // add your domain name
+const siteCode = 'yourSiteCode'; // add your siteCode
 
-const kameleoonClient = new KameleoonClient('oqc8lzy1na', false, './client-nodejs.json');
+const kameleoonClient = new KameleoonClient(siteCode, false, './client-nodejs.json');
 
 class ExperimentsHandler {
     constructor() {}
@@ -51,7 +52,7 @@ class ExperimentsHandler {
 
                 const FFName = kameleoonClient.configurations?.featureFlags[id]?.identificationKey;
                 const FFStatus = kameleoonClient.configurations?.featureFlags[id]?.status === 'ACTIVE';
-                console.log(FFStatus)
+
                 if(!FFStatus)
                 {
                     features[id] = data;
@@ -61,7 +62,7 @@ class ExperimentsHandler {
                 data.isActive = await kameleoonClient.activateFeature(visitorCode, FFName);
                 data.variables = kameleoonClient.obtainFeatureAllVariables(FFName);
                 data.variation = kameleoonClient.getFeatureVariationKey(visitorCode, FFName);
-                console.log(data.variables);
+
                 data.variationVariables = kameleoonClient.getFeatureVariable(visitorCode, FFName, 'title');
             }
             catch (e){console.log(e)}

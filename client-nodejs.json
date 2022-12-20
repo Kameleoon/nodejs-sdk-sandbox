@@ -1,6 +1,6 @@
 {
-    "client_id": "20441-mark-yaggy-condenast-com",
-    "client_secret": "iDWEcPYsk08432U5kuMo1_GJMf4cKZAZiUuJ4fI4nD0",
-    "actions_configuration_refresh_interval": 1,
+    "client_id": "yourId",
+    "client_secret": "yourSecret",
+    "actions_configuration_refresh_interval": 10,
     "visitor_data_maximum_size": 500
 }
