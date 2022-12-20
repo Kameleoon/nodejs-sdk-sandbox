@@ -1,0 +1,82 @@
+<aside id="logger" aria-hidden="true">
+    <div class="flex" style="justify-content: space-between;border-bottom: 1px solid #ebebeb;padding: 0rem 0 1rem; margin-bottom: 1rem">
+        <div class="logger-item"><strong style="font-size: 0.7rem;">visitorCode</strong>: <span style="font-size: 0.7rem;"><%= visitorCode %></span></div>
+        <div class="logger-item" style="width:auto;"><button id="kam-visit-generator" class="kam-button" >New Visitor</button></div>
+    </div>
+    <div class="flex">
+        <% if (typeof error === 'undefined' && typeof feature !== 'undefined' && feature.id) {%>
+            <div class="logger-item">
+                <div style="display: flex;align-items: center;" class="mb-3">
+                    <h2 class="mb-0 mr-2">Feature <%= feature.id %></h2>
+                </div>
+                <div style="font-size: 0.7rem;">
+                    <div class="mb-2">
+                        <strong><%= feature.id %></strong> : {<br />
+                        <p class="ml-4" style="font-size: 0.7rem;">
+                            isActive: <%= feature?.isActive %>,<br />
+                            variation: <%= feature?.variation %>,<br />
+                            defaultVariables: <%= JSON.stringify(feature?.variables) %>,<br />
+                            variationVariables: <%= JSON.stringify(feature?.variationData) %>,<br />
+                        </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        <%}%>
+
+        <% if (typeof error === 'undefined' && typeof experiment !== 'undefined' && experiment.id) {%>
+            <div class="logger-item">
+                <div style="display: flex;align-items: center;" class="mb-3">
+                    <h2 class="mb-0 mr-2">Experiments <%= experiment.id %></h2>
+                </div>
+                <div style="font-size: 0.7rem;">
+                    <div class="mb-2">
+                        <strong><%= experiment.id %></strong> : {<br />
+                        <p class="ml-4" style="font-size: 0.7rem;">
+                            variation: <%= experiment?.displayedVariation %>,<br />
+                            data: <%= JSON.stringify(experiment?.associatedData) %>,<br />
+                        </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        <%}%>
+
+        <% if (typeof error === 'undefined' && typeof experimentList !== 'undefined') {%>
+            <div class="logger-item">
+                <div style="display: flex;align-items: center;" class="mb-3">
+                    <h2 class="mb-0 mr-2">Experiments</h2>
+                    <p class="mb-0">
+                        <small>
+                            [<% experimentList.forEach((id, index) => {
+                            %>
+                                <a href="experiment/<%= id %>"><%= id %></a><%= index !== experimentList.length - 1 ? ',' : null %>
+                            <%
+                            }) %>]
+
+                        </small>
+                    </p>
+                </div>
+            </div>
+        <% } %>
+
+            <% if (typeof error === 'undefined' && typeof featureList !== 'undefined') {%>
+                <div class="logger-item">
+                    <div style="display: flex;align-items: center;" class="mb-3">
+                        <h2 class="mb-0 mr-2">Features</h2>
+                        <p class="mb-0">
+                            <small>
+                                [<% featureList.forEach((id, index) => {
+                                %>
+                                    <a href="feature/<%= id %>"><%= id %></a><%= index !== featureList.length - 1 ? ',' : null %>
+                                <%
+                                }) %>]
+
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            <% } %>
+
+    </div>
+</aside>
