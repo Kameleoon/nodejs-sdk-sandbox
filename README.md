@@ -19,4 +19,8 @@ $ npm start
 
 In this code example, we are fetching all the experiments and featureflags from your backoffice. In a real environment, you will trigger your experiment one by one using a hardcoded ID.
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:5000](http://localhost:5000/) with the endpoints:
+
+- [http://localhost:5000/feature/:id](http://localhost:5000/feature/:id)
+- [http://localhost:5000/experiment/:experimentId](http://localhost:5000/experiment/:experimentId)
+- [http://localhost:5000/](http://localhost:5000/)
