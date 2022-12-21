@@ -32,3 +32,5 @@ This endpoint retrieves an experiment data configuration (variation and feature 
 
 - http://localhost:5000/
 This endpoint retrieves all experiments and feature flags running on your Kameleoon project
+
+We have hosted the app on Heroku. You can play around with it [here](https://sdk-nodejs-sandbox.herokuapp.com/).
