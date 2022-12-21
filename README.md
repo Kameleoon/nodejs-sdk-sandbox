@@ -1,6 +1,6 @@
 # nodejs-sdk-sandbox
 
-A sample web app demonstrating the use of Kameleoon's Node.JS SDK for feature management and experimentation. Please check the SDK documentation for more details and this documentation (https://help.kameleoon.com/category/user-manual/activate-and-manage-your-feature-flags/) to know more about the features provided for Product and development teams.
+A sample web app demonstrating the use of Kameleoon's [Node.JS SDK](https://developers.kameleoon.com/nodejs-sdk.html) for feature management and experimentation. Please check the [SDK documentation](https://developers.kameleoon.com/nodejs-sdk.html) for more details and this documentation (https://help.kameleoon.com/category/user-manual/activate-and-manage-your-feature-flags/) to know more about the features provided for Product and development teams.
 
 Kameleoon Full Stack is a Feature Management and Experimentation solution for product and development teams. Learn more at https://kameleoon.com/en/platform/ab-testing-full-stack.
 
