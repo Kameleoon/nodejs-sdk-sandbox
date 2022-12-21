@@ -9,72 +9,6 @@ const siteCode = 'yourSiteCode'; // add your siteCode
 
 const kameleoonClient = new KameleoonClient(siteCode, false, './client-nodejs.json');
 
-class ExperimentsHandler {
-    constructor() {}
-
-    get experiments() {return kameleoonClient.obtainExperimentList()};
-    get features() {return kameleoonClient.obtainFeatureList()};
-    obtainAllExperiments = async (visitorCode) =>
-    {
-        let experiments = {};
-
-        for await (let id of this.experiments)
-        {
-            const data = {displayedVariation: 0, associatedData: null};
-
-            try
-            {
-                data.displayedVariation = await kameleoonClient.triggerExperiment(visitorCode, id);
-                data.associatedData = data.displayedVariation && kameleoonClient.obtainVariationAssociatedData(data.displayedVariation);
-            }
-            catch (e){console.log(e)}
-            experiments[id] = data;
-        }
-
-        return experiments;
-    }
-
-    obtainAllFeatures = async (visitorCode) =>
-    {
-        let features = {};
-
-        for await (let id of this.features)
-        {
-            const data = {
-                isActive: false,
-                variation: 0,
-                defaultVariables: null,
-                variationVariables: null,
-            };
-
-            try
-            {
-
-                const FFName = kameleoonClient.configurations?.featureFlags[id]?.identificationKey;
-                const FFStatus = kameleoonClient.configurations?.featureFlags[id]?.status === 'ACTIVE';
-
-                if(!FFStatus)
-                {
-                    features[id] = data;
-                    break;
-                }
-
-                data.isActive = await kameleoonClient.activateFeature(visitorCode, FFName);
-                data.variables = kameleoonClient.obtainFeatureAllVariables(FFName);
-                data.variation = kameleoonClient.getFeatureVariationKey(visitorCode, FFName);
-
-                data.variationVariables = kameleoonClient.getFeatureVariable(visitorCode, FFName, 'title');
-            }
-            catch (e){console.log(e)}
-            features[id] = data;
-        }
-
-        return features;
-    }
-}
-
-const experimentsHandler = new ExperimentsHandler();
-
 express()
     .use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
@@ -149,8 +83,8 @@ express()
           let error;
           try
           {
-              experimentList = experimentsHandler.experiments;
-              featureList = experimentsHandler.features;
+              experimentList = KameleoonClient.obtainExperimentList();
+              featureList = kameleoonClient.obtainFeatureList();
           }
           catch (e){
               error = e;
