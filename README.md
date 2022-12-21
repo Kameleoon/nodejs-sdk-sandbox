@@ -24,11 +24,11 @@ $ npm start
 ```
 
 #### Your app should now be running on localhost:5000 with these available endpoints:
-http://localhost:5000/feature/:id
+- http://localhost:5000/feature/:id
 This endpoint retrieves a feature flag data configuration (variation and feature variables)
 
-http://localhost:5000/experiment/:experimentId
+- http://localhost:5000/experiment/:experimentId
 This endpoint retrieves an experiment data configuration (variation and feature variables)
 
-http://localhost:5000/
+- http://localhost:5000/
 This endpoint retrieves all experiments and feature flags running on your Kameleoon project
