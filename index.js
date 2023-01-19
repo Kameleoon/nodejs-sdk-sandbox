@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 5000;
 const express = require('express');
 const path = require('path');
 
-const domain = 'yourdomain.com'; // add your domain name
+const domain = 'yourDomain'; // add your domain name
 const siteCode = 'yourSiteCode'; // add your siteCode
 
 const kameleoonClient = new KameleoonClient(siteCode, false, './client-nodejs.json');
@@ -14,22 +14,20 @@ express()
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
 
-    .get('/feature/:id', (req, res) => {
-        const {id} = req.params;
-        let visitorCode = kameleoonClient.obtainVisitorCode(req, res, domain);
+    .get('/feature/:key', (req, res) => {
+        const {key} = req.params;
+        let visitorCode = kameleoonClient.getVisitorCode(req, res, domain);
 
         kameleoonClient.runWhenReady(async function () {
-            const feature = {isActive: 0, variables: null, variation: 0, variationData: {}};
+            const feature = {variables: null, variation: 0, variationData: {}, key};
             let error;
 
             try
             {
-                feature.id = id;
-                feature.isActive = await kameleoonClient.activateFeature(visitorCode, id);
-                feature.variation = kameleoonClient.getFeatureVariationKey(visitorCode, id);
-                feature.variables = kameleoonClient.obtainFeatureAllVariables(id);
+                feature.variation = kameleoonClient.getFeatureVariationKey(visitorCode, key);
+                feature.variables = kameleoonClient.getFeatureAllVariables(key);
                 Object.keys(feature.variables).forEach(variableName => {
-                    feature.variationData[variableName] = kameleoonClient.getFeatureVariable(visitorCode, id, variableName);
+                    feature.variationData[variableName] = kameleoonClient.getFeatureVariable(visitorCode, key, variableName);
                 })
             }
             catch (e)
@@ -48,7 +46,7 @@ express()
 
     .get('/experiment/:experimentId', (req, res) => {
         const {experimentId} = req.params;
-        let visitorCode = kameleoonClient.obtainVisitorCode(req, res, domain);
+        let visitorCode = kameleoonClient.getVisitorCode(req, res, domain);
 
         kameleoonClient.runWhenReady(async function () {
             const experiment = {displayedVariation: 0, associatedData: null};
@@ -58,7 +56,7 @@ express()
             {
                 experiment.id = experimentId;
                 experiment.displayedVariation = await kameleoonClient.triggerExperiment(visitorCode, experimentId);
-                experiment.associatedData = experiment.displayedVariation ? kameleoonClient.obtainVariationAssociatedData(experiment.displayedVariation) : null;
+                experiment.associatedData = experiment.displayedVariation ? kameleoonClient.getVariationAssociatedData(experiment.displayedVariation) : null;
             }
             catch (e)
             {
@@ -74,7 +72,7 @@ express()
 
     })
     .get('/', (req, res) => {
-      let visitorCode = kameleoonClient.obtainVisitorCode(req, res, domain);
+      let visitorCode = kameleoonClient.getVisitorCode(req, res, domain);
 
       kameleoonClient.runWhenReady(async function () {
           let experimentList;

@@ -4,16 +4,16 @@
         <div class="logger-item" style="width:auto;"><button id="kam-visit-generator" class="kam-button" >New Visitor</button></div>
     </div>
     <div class="flex">
-        <% if (typeof error === 'undefined' && typeof feature !== 'undefined' && feature.id) {%>
+        <% if (typeof error === 'undefined' && typeof feature !== 'undefined') {%>
             <div class="logger-item">
                 <div style="display: flex;align-items: center;" class="mb-3">
                     <h2 class="mb-0 mr-2">Feature <%= feature.id %></h2>
                 </div>
                 <div style="font-size: 0.7rem;">
                     <div class="mb-2">
-                        <strong><%= feature.id %></strong> : {<br />
+                        <strong><%= feature.key %></strong> : {<br />
                         <p class="ml-4" style="font-size: 0.7rem;">
-                            isActive: <%= feature?.isActive %>,<br />
+                            key: <%= feature?.key %>,<br />
                             variation: <%= feature?.variation %>,<br />
                             defaultVariables: <%= JSON.stringify(feature?.variables) %>,<br />
                             variationVariables: <%= JSON.stringify(feature?.variationData) %>,<br />
