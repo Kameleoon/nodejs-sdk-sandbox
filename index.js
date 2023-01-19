@@ -25,12 +25,11 @@ express()
             try
             {
                 feature.id = id;
-                const FFName = kameleoonClient.configurations?.featureFlags[feature.id]?.identificationKey;
                 feature.isActive = await kameleoonClient.activateFeature(visitorCode, id);
-                feature.variation = kameleoonClient.getFeatureVariationKey(visitorCode, FFName);
+                feature.variation = kameleoonClient.getFeatureVariationKey(visitorCode, id);
                 feature.variables = kameleoonClient.obtainFeatureAllVariables(id);
                 Object.keys(feature.variables).forEach(variableName => {
-                    feature.variationData[variableName] = kameleoonClient.getFeatureVariable(visitorCode, FFName, variableName);
+                    feature.variationData[variableName] = kameleoonClient.getFeatureVariable(visitorCode, id, variableName);
                 })
             }
             catch (e)
@@ -83,8 +82,8 @@ express()
           let error;
           try
           {
-              experimentList = KameleoonClient.obtainExperimentList();
-              featureList = kameleoonClient.obtainFeatureList();
+              experimentList = kameleoonClient.getExperimentList();
+              featureList = kameleoonClient.getFeatureList();
           }
           catch (e){
               error = e;
